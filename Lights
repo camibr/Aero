@@ -1,0 +1,61 @@
+'''
+The idea is to choose one among the following types of light : 
+a - Beacon light
+b - Strobe light
+c - Navigation light
+d - Taxi light
+e - Landing light
+
+"b", "c", "d", "e" lights are continuous. We might choose to turn them on/off manually and we are asked if we wanna shift to another light
+"a" light switches on/off automatically every second, during N seconds
+'''
+
+# FUNCTIONS
+
+def light():                # Light choices. Depending on the choice made, one or another function will run thereafter
+    letter = input("Choose one of the following lights to turn on (only type the referred letter) : \na - Beacon light\nb - Strobe light\nc - Navigation light\nd - Taxi light\ne - Landing light\n here -> ")
+    if letter in 'bcde':
+        return 0
+    else:
+        return 1
+
+import threading
+import time
+
+def onoff_auto(T):          # This function is called by the timer() function. Switches ON/OFF alternatively every second
+    t=0
+    while t <= T:
+        print("Light ON\n")
+        time.sleep(1)
+        t += 1
+        print("Light OFF\n")
+        time.sleep(1)
+        t += 1
+    return
+
+def timer():            # Timer set on T=10 sec
+    T = 10.0
+    timer = threading.Timer(T, onoff_auto(T))
+    timer.start()
+    timer.cancel()
+    print("Timer off\n")
+
+def ask_turnoff():              # for b, c, d, e lights. Ask if wish to turn OFF or change the light type
+    answer = input("Would you like to turn off the light ? (y/n)\n here -> ")
+    if answer == 'y':
+        print("We're turning off the current light.")
+        answer2 = input("Turn on another light ? (y/n)\n here -> ")
+        if answer2 == 'y':
+            light()
+        else:
+            break
+    else:
+        break
+
+# MAIN
+
+choice = light()
+if choice == 1:
+    timer()
+else:
+    ask_turnoff()
