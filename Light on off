@@ -12,7 +12,7 @@ e - Landing light
 
 # FUNCTIONS
 
-def light():                # Light choices. Depending of the choice, one or another function will run thereafter
+def light():                # Light choices. Depending on the choice made, one or another function will run thereafter
     letter = input("Choose one of the following lights to turn on (only type the referred letter) : \na - Beacon light\nb - Strobe light\nc - Navigation light\nd - Taxi light\ne - Landing light\n here -> ")
     if letter in 'bcde':
         return 0
