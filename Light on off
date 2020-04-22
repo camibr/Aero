@@ -12,7 +12,7 @@ e - Landing light
 
 # FUNCTIONS
 
-def light():
+def light():                # Light choices. Depending of the choice, one or another function will run
     letter = input("Choose one of the following lights to turn on (only type the referred letter) : \na - Beacon light\nb - Strobe light\nc - Navigation light\nd - Taxi light\ne - Landing light\n here -> ")
     if letter in 'bcde':
         return 0
@@ -22,7 +22,7 @@ def light():
 import threading
 import time
 
-def onoff_auto(T):
+def onoff_auto(T):          # This function is called by the timer() function. Switches ON/OFF alternatively every second
     t=0
     while t <= T:
         print("Light ON\n")
@@ -33,15 +33,14 @@ def onoff_auto(T):
         t += 1
     return
 
-def timer():
+def timer():            # Timer set on T=10 sec
     T = 10.0
     timer = threading.Timer(T, onoff_auto(T))
     timer.start()
     timer.cancel()
     print("Timer off\n")
 
-
-def ask_turnoff():
+def ask_turnoff():              # for b, c, d, e lights. Ask if wish to turn OFF or change the light type
     answer = input("Would you like to turn off the light ? (y/n)\n here -> ")
     if answer == 'y':
         print("We're turning off the current light.")
