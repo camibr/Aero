@@ -1,5 +1,5 @@
 '''
-The idea is to choose one among the following types of light : 
+The idea is to choose one among the following types of light :
 a - Beacon light
 b - Strobe light
 c - Navigation light
@@ -10,35 +10,30 @@ e - Landing light
 "a" light switches on/off automatically every second, during N seconds
 '''
 
+
 # FUNCTIONS
 
 def light():                # Light choices. Depending on the choice made, one or another function will run thereafter
     letter = input("Choose one of the following lights to turn on (only type the referred letter) : \na - Beacon light\nb - Strobe light\nc - Navigation light\nd - Taxi light\ne - Landing light\n here -> ")
     if letter in 'bcde':
-        return 0
+        return True
+    elif letter in 'a':
+        return False
     else:
-        return 1
+        print("error")
 
-import threading
-import time
 
-def onoff_auto(T):          # This function is called by the timer() function. Switches ON/OFF alternatively every second
-    t=0
-    while t <= T:
-        print("Light ON\n")
-        time.sleep(1)
-        t += 1
-        print("Light OFF\n")
-        time.sleep(1)
-        t += 1
-    return
+def timer(f, d):        # Switches ON/OFF alternatively every second
+    import time
+    for i in range(1, d+1):
+        if i%2 == 0:
+            print("OFF")
+        else:
+            print("ON")
+        time.sleep(f)
+    print(str(d) + " seconds OUT")
+    ask_turnoff()
 
-def timer():            # Timer set on T=10 sec
-    T = 10.0
-    timer = threading.Timer(T, onoff_auto(T))
-    timer.start()
-    timer.cancel()
-    print("Timer off\n")
 
 def ask_turnoff():              # for b, c, d, e lights. Ask if wish to turn OFF or change the light type
     answer = input("Would you like to turn off the light ? (y/n)\n here -> ")
@@ -46,16 +41,19 @@ def ask_turnoff():              # for b, c, d, e lights. Ask if wish to turn OFF
         print("We're turning off the current light.")
         answer2 = input("Turn on another light ? (y/n)\n here -> ")
         if answer2 == 'y':
-            light()
-        else:
-            break
+            choice()
+
+
+def choice():
+    L = light()
+    if L == False:
+        duration = 10
+        freq = 1
+        timer(freq, duration)
     else:
-        break
+        ask_turnoff()
+
 
 # MAIN
 
-choice = light()
-if choice == 1:
-    timer()
-else:
-    ask_turnoff()
+choice()
